@@ -97,10 +97,6 @@ class Get_Ava:
     
     def download_ava_files(self,**kwargs):
         
-        if kwargs['full']==False:
-                self.files_crypt = self.files_crypt[:2]
-                print(self.files_crypt)
-
         '''this funciont getts all ava files in 44 patches
         a prime factor of n imges in whole data set
         all batchs have equal n images 255,000/44'''
@@ -133,7 +129,7 @@ class Get_Ava:
             if '(Unzipped Files)' not in i.path and i.path[-3:]=='zip']
             
             if kwargs['full']==False:
-                paths = self.paths[:2]
+                paths = self.paths[:10]
                 print(paths)
             else:
                 paths = self.paths
@@ -155,6 +151,10 @@ class Get_Ava:
                   list(os.scandir('Images')))
         
         else:
+            if kwargs['full']==False:
+                self.files_crypt = self.files_crypt[:2]
+                print(self.files_crypt)
+
             current = [i.name for i in os.scandir('Images/')]
             if kwargs['download']:
                 for id_ in self.files_crypt:
