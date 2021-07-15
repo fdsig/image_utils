@@ -89,7 +89,7 @@ class Get_Ava:
         with open('/content/batch_meta/ava_files_urls.txt', 'r') as fb:
             txt = fb.readlines()
         self.files_crypt = [i.split('/')[-2] for i in txt[0].split(',')]
-        if len(get_ava.files_crypt)==44:
+        if len(self.files_crypt)==44:
             print(f'File IDs have sucessfully been obtaniend and now in content/batch_meta/')
         print(self.files_crypt)
        
