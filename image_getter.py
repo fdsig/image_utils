@@ -34,17 +34,17 @@ class Get_Ava:
         self.mpada_git = [os.path.join(root,name) for root,dirs,files in os.walk('/content/MPADA/', topdown=False) for name in files]
         self.origional_py_files = [path for path in self.mpada_git if path[-2:]=='py']
         self.origional_py_names = [path.split('/')[-1] for path in self.mpada_git if path[-2:]=='py']
-        check = input('replace .py files y/n')
-        while not check != 'y' or check != 'n':
-            print(check !='y',check != 'n' )
-            check = input('did not get y,n')
+        check = input('replace .py files y/n:  ')
+        while not any((check=='y', check=='n')):
+            check = input('not y or n try y or n:')
             print(check)
+
+        y, n = check == "y", check == "n"
+        print(f' you entered n = No:  {n} , you entered y = Yes {y}' )
         if check=='y':
             for py in self.origional_py_files:
                 os.remove(py)
                 print(f' orgional py files:\n {py}\n removed')
-                
-
             new_py = [py_file.path for py_file in os.scandir('/content/mpada_temp/')]
             import shutil
             print(new_py)
@@ -53,7 +53,7 @@ class Get_Ava:
                 shutil.copy(new,old)
         else:
             print('no files moved')
-            return
+
 
     def cleanup(self):  
         os.chdir('/content/')
@@ -110,7 +110,10 @@ class Get_Ava:
         All directory and deletes the zip files and the unzipped batches
         --- a fully autmated pipeline with no need for google drive mounting'''
         print(kwargs)
-        """this function for ava files on own drvie""" 
+        if kwargs['clear_current']:
+            os.system('rm -rf Images')
+        else:
+            print('no files cleared if re running this ') 
         try:
             os.mkdir('Images')
         except:
@@ -129,7 +132,7 @@ class Get_Ava:
             if '(Unzipped Files)' not in i.path and i.path[-3:]=='zip']
             
             if kwargs['full']==False:
-                paths = self.paths[:10]
+                paths = self.paths[-4:]
                 print(paths)
             else:
                 paths = self.paths
@@ -141,9 +144,16 @@ class Get_Ava:
 
             paths = [j.path for i in os.scandir('Images') 
             if 'Batch' in i.name for j in os.scandir(i)]
+            existing_fids = [ ]
 
             for i in paths:
-                shutil.move(i,'Images/images')
+                try:
+                    shutil.move(i,'Images/images')
+                except:
+                    existing_fids.append(i)
+            print(f'{len(existing_fids)} already exist \n all files = {len(paths)}')
+
+
             for path in os.scandir('Images'):
                 if 'Batch' in path.name:
                     os.rmdir(path.path) 
@@ -152,7 +162,7 @@ class Get_Ava:
         
         else:
             if kwargs['full']==False:
-                self.files_crypt = self.files_crypt[:2]
+                self.files_crypt = self.files_crypt[-4:]
                 print(self.files_crypt)
 
             current = [i.name for i in os.scandir('Images/')]
@@ -187,4 +197,3 @@ class Get_Ava:
                     os.system('rm -rf '+path.path) 
             print(len(list(os.scandir('Images/images/'))), list(os.scandir('Images')))
     ######## (Change from False to True and  read to now_own to use)
-  
