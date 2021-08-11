@@ -7,12 +7,12 @@ from kutils import image_utils
 from kutils import generic
 import pandas as pd, numpy as np, os
 
-root_path = '/content/ava-mlsp/'
+root_path = '/content/drive/MyDrive/0.AVA/ava-mlsp'
 dataset = root_path + 'metadata/AVA_data_official_test.csv';
 ids = pd.read_csv(dataset)
 input_shape = (None,None, 3)
 features_root = '/content/drive/MyDrive/0.AVA/results/' + 'mlsp_features/'
-images_path = root_path + 'images/'
+images_path = '/content/drive/MyDrive/0.AVA/AVA_dataset/ava_full/'
 features_file = features_root + 'iv3_mlsp_wide_orig/i1[orig]_lfinal_o1[5,5,10048]_r1.h5'
 model = apps.model_inception_pooled(input_shape)
 pre   = apps.process_input[apps.InceptionV3]
