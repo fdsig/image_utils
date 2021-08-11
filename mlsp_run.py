@@ -47,7 +47,6 @@ gen_params = dict(batch_size    = 128,
                   input_shape   = input_size,
                   inputs        = 'image_name',
                   outputs       = outputs, 
-                  random_group  = False,
                   fixed_batches = True)
 
 helper = mh.ModelHelper(model, model_name, ids, 
