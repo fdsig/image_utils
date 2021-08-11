@@ -4,6 +4,7 @@ from google.colab import drive
 import os
 import zipfile
 import shutil
+from tqdm import tqdm
 
 class Get_Ava:
 
@@ -137,7 +138,7 @@ class Get_Ava:
             else:
                 paths = self.paths
 
-            for zip_f in paths:
+            for zip_f in tqdm(paths):
                 zip_ref = zipfile.ZipFile(zip_f, 'r')
                 zip_ref.extractall("./Images/")
                 zip_ref.close()
@@ -146,7 +147,7 @@ class Get_Ava:
             if 'Batch' in i.name for j in os.scandir(i)]
             existing_fids = [ ]
 
-            for i in paths:
+            for i in tqdm(paths):
                 try:
                     shutil.move(i,'Images/images')
                 except:
@@ -154,7 +155,7 @@ class Get_Ava:
             print(f'{len(existing_fids)} already exist \n all files = {len(paths)}')
 
 
-            for path in os.scandir('Images'):
+            for path in tqdm(os.scandir('Images')):
                 if 'Batch' in path.name:
                     os.rmdir(path.path) 
             print(len(list(os.scandir('Images/images/'))), 
@@ -167,10 +168,8 @@ class Get_Ava:
 
             current = [i.name for i in os.scandir('Images/')]
             if kwargs['download']:
-                for id_ in self.files_crypt:
-                    print(id_)
+                for id_ in tqdm(self.files_crypt):
                     if id_ not in (current):
-                        print(id_)
                         gdd.download_file_from_google_drive(file_id=id_,
                                                 dest_path='./Images/'+id_,
                                                 unzip=True)
