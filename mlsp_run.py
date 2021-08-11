@@ -12,8 +12,10 @@ ids = pd.read_csv(dataset)
 
 features_file = root_path + 'models/irnv2_mlsp_wide_orig/model_best_weights.h5'
 fc1_size = 2048
-image_size = '[orig]'
-input_size = (5,5,16928)
+
+#image_size = '[orig]' moved
+image_size = (28,28)
+input_size = (28,28,3)
 model_name = features_file.split('/')[-2]
 loss = 'MSE'
 bn = 2
@@ -43,7 +45,7 @@ pred = apps.fc_layers(x, name       = 'head',
 model = Model(inputs=input_feats, outputs=pred)
 
 gen_params = dict(batch_size    = 128,
-                  data_path     = root_path+'images/',                  
+                  data_path     = root_path+'images/', # can change to own                 
                   input_shape   = input_size,
                   inputs        = 'image_name',
                   outputs       = outputs, 
@@ -58,8 +60,8 @@ helper = mh.ModelHelper(model, model_name, ids,
                      multiproc      = False, workers = 1,
 #                      multiproc      = True, workers = 3,
                      early_stop_patience = 5,
-                     logs_root      = root_path + 'logs',
-                     models_root    = root_path + 'models',
+                     logs_root      = root_path + 'logs', # can change
+                     models_root    = root_path + 'models', #can change
                      gen_params     = gen_params)
 
 helper.model_name.update(fc1 = '[%d]' % fc1_size, 
