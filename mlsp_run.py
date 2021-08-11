@@ -43,7 +43,7 @@ pred = apps.fc_layers(x, name       = 'head',
 model = Model(inputs=input_feats, outputs=pred)
 
 gen_params = dict(batch_size    = 128,
-                  data_path     = features_file,                  
+                  data_path     = root_path+'images/',                  
                   input_shape   = input_size,
                   inputs        = 'image_name',
                   outputs       = outputs, 
