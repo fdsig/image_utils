@@ -65,23 +65,36 @@ class Get_Ava:
             for dir_ in to_clean:
                 os.system(clean_command+' '+dir_)
 
+    def parse_urls(self):
+        self.args = {'zip':False}
+        # get a list of urls to dowload whole detaset - the url below is itself a .txt of ava batch zips
+        # which are parsed in code cell five
+        # this is use by 'get data()' to pull all 255000 images
+        ava_batches_urls = ['https://drive.google.com/file/d/1YtU0m8cf2qgYcSpcPqlSz2GxO7wowu6W/view?usp=sharing']
+        self.args['urls']=ava_batches_urls
+        self.args['file_names']=['ava_files_urls.txt']
+        self.args['dest_path']= './batch_meta/'
+        
 
 
 
-    def google_getter(self,**kwargs):
 
-        file_keys = [url.split('/')[3].split('=')[1] for url in kwargs['urls'] 
+
+
+    def google_getter(self):
+
+        file_keys = [url.split('/')[3].split('=')[1] for url in self.args['urls'] 
                     if 'usp=sharing' not in url]
         
-        for link in kwargs['urls']:
+        for link in self.args['urls']:
             print(f'{link}\n')
-        file_keys += [url.split('/')[-2] for url in kwargs['urls'] if 'usp' in url]
+        file_keys += [url.split('/')[-2] for url in self.args['urls'] if 'usp' in url]
 
-        for f_key,fid in zip(file_keys,kwargs['file_names']):
+        for f_key,fid in zip(file_keys,self.args['file_names']):
             gdd.download_file_from_google_drive(file_id=f_key,
-                                                    dest_path=kwargs['dest_path']+'/'+fid,
-                                                unzip=kwargs['zip'])
-        files = [file.path for file in os.scandir(kwargs['dest_path'])]
+                                                    dest_path=self.args['dest_path']+'/'+fid,
+                                                unzip=self.args['zip'])
+        files = [file.path for file in os.scandir(self.args['dest_path'])]
         for file in files:
             print(f'\n The files are : {file}')
     
