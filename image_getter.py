@@ -151,7 +151,7 @@ class Get_Ava:
             else:
                 paths = self.paths
 
-            for zip_f in tqdm(paths):
+            for zip_f in tqdm(paths, colour=('#FF69B4')):
                 zip_ref = zipfile.ZipFile(zip_f, 'r')
                 zip_ref.extractall("./Images/")
                 zip_ref.close()
@@ -181,7 +181,7 @@ class Get_Ava:
 
             current = [i.name for i in os.scandir('Images/')]
             if kwargs['download']:
-                for id_ in tqdm(self.files_crypt):
+                for id_ in tqdm(self.files_crypt, colour=('#FF69B4')):
                     if id_ not in (current):
                         gdd.download_file_from_google_drive(file_id=id_,
                                                 dest_path='./Images/'+id_,
