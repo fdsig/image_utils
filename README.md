@@ -1,4 +1,4 @@
-This repo are some examples of image file processing
+## AVA BENCHMARKING DATASET META DATA and File Handing Scripts
 
 image getter.py is a utility for handling large data files from google as part of research into Image Quality Assement of Professional Photos
 
