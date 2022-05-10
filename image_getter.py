@@ -26,9 +26,6 @@ class Get_Ava:
         """dowloads models and ava images form gooogle dive (no mounting)"""
         if kwargs["own_drive"]:
             from google.colab import drive
-
-            drive.flush_and_unmount()
-        os.system("git clone https://github.com/Openning07/MPADA.git")
         self.google_getter
         self.download_ava_files
 
@@ -153,7 +150,7 @@ class Get_Ava:
                 print("Images/images exists also")
 
         if kwargs["own_drive"]:
-            drive.mount("/content/drive", force_remount=True)
+            #drive.mount("/content/drive", force_remount=True)
             self.paths = [
                 i.path
                 for i in os.scandir(
